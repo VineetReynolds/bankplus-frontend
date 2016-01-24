@@ -32,6 +32,10 @@ RUN grunt build
 # Copy site build to nginx
 RUN cp -a ./dist/. ./html/
 
+# Overwrite nginx.conf in the image
+ADD ./copy-nginx-conf.sh /tmp/copy-nginx-conf.sh
+RUN /tmp/copy-nginx-conf.sh
+
 # Open port and start nginx
 EXPOSE 80
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
